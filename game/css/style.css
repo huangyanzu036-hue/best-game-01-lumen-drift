@@ -1,0 +1,416 @@
+/* Lumen Drift — interface styling. The game itself is drawn on canvas; this
+   file styles the page, the HUD and the menu screens around it. */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: #04050f;
+  color: #e8f0ff;
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  overflow: hidden;
+}
+
+#game-wrap {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+#game-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* ---------- HUD ---------- */
+
+#hud {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 14px 18px;
+  pointer-events: none;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+}
+
+.hud-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.hud-score-row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.hud-label {
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #9fb2d8;
+}
+
+.hud-combo {
+  color: #ffe066;
+  font-size: 20px;
+}
+
+.hud-wave-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 15px;
+  color: #cfe4ff;
+}
+
+.hud-shards {
+  color: #ffe066;
+}
+
+.hud-overcharge {
+  color: #ff9f1c;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  animation: pulse 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes pulse {
+  from { opacity: 0.6; }
+  to { opacity: 1; }
+}
+
+.hud-right {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: flex-end;
+}
+
+.hud-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hud-bar {
+  width: 180px;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.hud-bar-fill {
+  height: 100%;
+  border-radius: 6px;
+  transition: width 0.15s ease-out;
+}
+
+.hud-bar-fill.hull {
+  background: linear-gradient(90deg, #4dff88, #7df9ff);
+}
+
+.hud-bar-fill.hull.low {
+  background: linear-gradient(90deg, #ff2e63, #ff9f1c);
+}
+
+.hud-bar-fill.dash {
+  background: #7df9ff;
+  opacity: 0.5;
+}
+
+#hud-dash.ready .hud-bar-fill.dash {
+  opacity: 1;
+  box-shadow: 0 0 10px #7df9ff;
+}
+
+.hud-bar-text {
+  font-size: 12px;
+  color: #cfe4ff;
+  min-width: 64px;
+}
+
+#pause-button {
+  pointer-events: auto;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #e8f0ff;
+  border-radius: 6px;
+  padding: 4px 10px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+#pause-button:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.hud-boss {
+  position: absolute;
+  top: 74px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(560px, 70vw);
+  text-align: center;
+  font-size: 14px;
+  letter-spacing: 0.12em;
+  color: #ff7aa2;
+}
+
+.boss-bar {
+  width: 100%;
+  height: 10px;
+  margin-top: 4px;
+}
+
+.hud-bar-fill.boss {
+  background: linear-gradient(90deg, #ff2e63, #ff7aa2);
+}
+
+/* ---------- Wave banner ---------- */
+
+#wave-banner {
+  position: absolute;
+  top: 34%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 44px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: #ffffff;
+  text-shadow: 0 0 24px rgba(125, 249, 255, 0.9), 0 2px 6px rgba(0, 0, 0, 0.8);
+  pointer-events: none;
+}
+
+.banner-pop {
+  animation: banner-pop 2.2s ease-out forwards;
+}
+
+@keyframes banner-pop {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+  12% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
+  20% { transform: translate(-50%, -50%) scale(1); }
+  80% { opacity: 1; }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(1); }
+}
+
+/* ---------- Screens ---------- */
+
+.screen {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-align: center;
+  background: radial-gradient(ellipse at center, rgba(7, 10, 26, 0.55) 0%, rgba(4, 5, 15, 0.88) 100%);
+  padding: 24px;
+}
+
+.game-title {
+  margin: 0;
+  font-size: clamp(48px, 9vw, 96px);
+  letter-spacing: 0.14em;
+  background: linear-gradient(90deg, #7df9ff, #b678ff, #ff5d8f);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: none;
+  filter: drop-shadow(0 0 22px rgba(125, 249, 255, 0.45));
+}
+
+.tagline {
+  margin: 0;
+  font-size: clamp(16px, 2.4vw, 22px);
+  color: #cfe4ff;
+  font-style: italic;
+}
+
+.intro {
+  max-width: 560px;
+  margin: 6px 0 10px;
+  color: #9fb2d8;
+  line-height: 1.6;
+}
+
+.big-button {
+  background: linear-gradient(90deg, #0e7490, #6d28d9);
+  color: #ffffff;
+  border: 1px solid rgba(125, 249, 255, 0.6);
+  border-radius: 10px;
+  padding: 14px 34px;
+  font-size: 20px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 0 24px rgba(125, 249, 255, 0.35);
+}
+
+.big-button:hover {
+  filter: brightness(1.2);
+}
+
+.small-button {
+  background: transparent;
+  color: #9fb2d8;
+  border: 1px solid rgba(159, 178, 216, 0.5);
+  border-radius: 8px;
+  padding: 8px 18px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.small-button:hover {
+  color: #e8f0ff;
+  border-color: #e8f0ff;
+}
+
+.high-score {
+  color: #ffe066;
+  font-size: 16px;
+  margin: 4px 0;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 14px;
+  color: #9fb2d8;
+  font-size: 15px;
+}
+
+kbd {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  padding: 1px 7px;
+  font-family: inherit;
+  font-size: 13px;
+  color: #e8f0ff;
+}
+
+.screen-heading {
+  margin: 0;
+  font-size: clamp(30px, 5vw, 48px);
+  letter-spacing: 0.06em;
+}
+
+.screen-heading.danger {
+  color: #ff5d8f;
+  text-shadow: 0 0 24px rgba(255, 46, 99, 0.6);
+}
+
+.screen-heading.gold {
+  color: #ffe066;
+  text-shadow: 0 0 24px rgba(255, 224, 102, 0.6);
+}
+
+.screen-sub {
+  color: #9fb2d8;
+  margin: 0 0 12px;
+}
+
+.new-record {
+  color: #ffe066;
+  font-weight: 700;
+  margin: 0;
+}
+
+.final-score {
+  font-size: 56px;
+  font-weight: 800;
+  margin: 6px 0;
+  color: #ffffff;
+}
+
+.final-detail {
+  color: #cfe4ff;
+  margin: 0;
+}
+
+.hint {
+  color: #9fb2d8;
+  margin: 6px 0 0;
+}
+
+/* ---------- Upgrade cards ---------- */
+
+.upgrade-cards {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.upgrade-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 200px;
+  min-height: 130px;
+  padding: 20px 16px;
+  text-align: center;
+  background: linear-gradient(160deg, rgba(14, 116, 144, 0.35), rgba(109, 40, 217, 0.35));
+  border: 1px solid rgba(125, 249, 255, 0.5);
+  border-radius: 12px;
+  color: #e8f0ff;
+  cursor: pointer;
+}
+
+.upgrade-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(125, 249, 255, 0.35);
+  border-color: #7df9ff;
+}
+
+.upgrade-name {
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.upgrade-desc {
+  font-size: 14px;
+  color: #cfe4ff;
+  line-height: 1.45;
+}
+
+/* ---------- Mute ---------- */
+
+#mute-button {
+  position: absolute;
+  right: 14px;
+  bottom: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #e8f0ff;
+  border-radius: 8px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+#mute-button:hover {
+  background: rgba(255, 255, 255, 0.22);
+}

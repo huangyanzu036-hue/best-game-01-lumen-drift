@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lumen Drift — a neon arena survival shooter</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="game-wrap">
+  <canvas id="game-canvas"></canvas>
+
+  <div id="hud" class="hidden">
+    <div class="hud-left">
+      <div class="hud-score-row">
+        <span class="hud-label">Score</span>
+        <span id="hud-score">0</span>
+        <span id="hud-combo" class="hud-combo hidden"></span>
+      </div>
+      <div class="hud-wave-row">
+        <span id="hud-wave">Wave 1/10</span>
+        <span class="hud-shards">✦ <span id="hud-shards">0</span></span>
+        <span id="hud-overcharge" class="hud-overcharge hidden">OVERCHARGE</span>
+      </div>
+    </div>
+    <div class="hud-right">
+      <div class="hud-bar-row">
+        <span class="hud-label">Hull</span>
+        <div class="hud-bar"><div id="hud-hull-fill" class="hud-bar-fill hull"></div></div>
+        <span id="hud-hull-text" class="hud-bar-text">100 / 100</span>
+      </div>
+      <div class="hud-bar-row">
+        <span class="hud-label">Dash</span>
+        <div id="hud-dash" class="hud-bar"><div id="hud-dash-fill" class="hud-bar-fill dash"></div></div>
+        <button id="pause-button" type="button" title="Pause (P)">II</button>
+      </div>
+    </div>
+    <div id="hud-boss" class="hud-boss hidden">
+      <span id="hud-boss-name">Umbral Sovereign</span>
+      <div class="hud-bar boss-bar"><div id="hud-boss-fill" class="hud-bar-fill boss"></div></div>
+    </div>
+  </div>
+
+  <div id="wave-banner" class="hidden"></div>
+
+  <div id="screen-title" class="screen">
+    <h1 class="game-title">LUMEN DRIFT</h1>
+    <p class="tagline">The Starforge is dying. You are its last spark.</p>
+    <p class="intro">
+      Hold the arena through 10 waves of Umbral wisps, gather their light,
+      choose your upgrades, and bring down the Sovereign that waits at the end.
+    </p>
+    <button id="start-button" class="big-button" type="button">▶ &nbsp;Enter the Arena</button>
+    <p id="title-high-score" class="high-score"></p>
+    <div class="controls">
+      <div><kbd>W A S D</kbd> or <kbd>← ↑ ↓ →</kbd> move</div>
+      <div><kbd>Mouse</kbd> aim &nbsp;·&nbsp; <kbd>Hold click</kbd> fire</div>
+      <div><kbd>Space</kbd> dash (briefly invulnerable)</div>
+      <div><kbd>P</kbd> pause &nbsp;·&nbsp; <kbd>M</kbd> sound &nbsp;·&nbsp; <kbd>R</kbd> restart</div>
+    </div>
+  </div>
+
+  <div id="screen-upgrade" class="screen hidden">
+    <h2 class="screen-heading">Wave cleared — choose an upgrade</h2>
+    <p class="screen-sub">Your build is yours. Pick one.</p>
+    <div id="upgrade-cards" class="upgrade-cards"></div>
+  </div>
+
+  <div id="screen-paused" class="screen hidden">
+    <h2 class="screen-heading">Paused</h2>
+    <p class="screen-sub">The arena waits for no spark — except this one.</p>
+    <button id="resume-button" class="big-button" type="button">Resume</button>
+    <button id="quit-to-title-button" class="small-button" type="button">Quit to title</button>
+  </div>
+
+  <div id="screen-gameover" class="screen hidden">
+    <h2 class="screen-heading danger">The light goes out</h2>
+    <p id="new-record-lost" class="new-record hidden">★ New best score!</p>
+    <p class="final-score"><span id="final-score-lost">0</span></p>
+    <p id="final-wave-lost" class="final-detail"></p>
+    <p id="final-kills-lost" class="final-detail"></p>
+    <button id="restart-button" class="big-button" type="button">↻ &nbsp;Try again</button>
+    <p class="hint">or press <kbd>R</kbd></p>
+  </div>
+
+  <div id="screen-victory" class="screen hidden">
+    <h2 class="screen-heading gold">The forge burns bright again</h2>
+    <p id="new-record-won" class="new-record hidden">★ New best score!</p>
+    <p class="final-score"><span id="final-score-won">0</span></p>
+    <p id="final-kills-won" class="final-detail"></p>
+    <p id="final-shards-won" class="final-detail"></p>
+    <button id="play-again-button" class="big-button" type="button">↻ &nbsp;Play again</button>
+    <p class="hint">or press <kbd>R</kbd></p>
+  </div>
+
+  <button id="mute-button" type="button">🔊 Sound on</button>
+</div>
+<script type="module" src="src/main.js"></script>
+</body>
+</html>
